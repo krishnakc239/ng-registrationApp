@@ -1,0 +1,51 @@
+a{
+    color: white;
+}
+body{
+    background-color: white;
+    color: black;
+
+}
+nav{
+    background-color: #449d44;!important;
+}
+.navbar-brand{
+    background-color: #761c19;
+    font-weight: bolder;
+}
+table{
+    background-color: #ebebeb;!important;
+    color: black;
+}
+input{
+    color: black;
+}
+td p{
+    color: red;!important;
+}
+
+.container{
+    margin-bottom: 20px;
+}
+.footer{
+    margin-top: 6px;
+}
+
+*[role="form"] {
+    max-width: 630px;
+    margin: 30px auto;
+    border-radius: 0.3em;
+    color: black;
+}
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
+.table{
+    background-color: #f9f9f9;
+}
+tr .data-title{
+    background-color: red;
+}
+

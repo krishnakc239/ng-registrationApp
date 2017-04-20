@@ -1,0 +1,55 @@
+a{
+    color: white;
+}
+body{
+    background-color: #ffffff;
+    /*color: white;*/
+
+}
+nav{
+    background-color: #449d44;!important;
+}
+.navbar-brand{
+    background-color: #761c19;
+    font-weight: bolder;
+}
+table{
+    background-color: white;!important;
+}
+.form-horizontal{
+    background-color: #d6e9c6;
+    width: auto;
+    /*padding-left: 300px;*/
+}
+input{
+    color: black;
+}
+td p{
+    color: red;!important;
+}
+.container{
+    /*margin-bottom: 20px;*/
+}
+.footer{
+    margin-top: 6px;
+}
+#registerUser {
+    margin-top: 50px;
+}
+
+input {
+    border-radius: 3px;
+}
+
+
+.control-label {
+    font-weight: bold;
+}
+.jumbotron{
+    background-color: white;
+}.table p{
+     color: black;
+ }
+ .error{
+     color: red;
+ }

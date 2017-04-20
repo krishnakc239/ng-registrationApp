@@ -1,0 +1,25 @@
+<style>
+    p a{
+        color: black;
+    }
+</style>
+<div header-directive></div>
+<div class="form-horizontal" ng-controller="arrayController">
+    <p>
+    <h3>Original Data </h3><a style="color: black" ng-repeat="item  in p1">{{item+"  "}}</a>
+    <hr>
+    <h3>First Priority</h3><a style="color: black" ng-repeat="item  in p2">{{item+"  "}}</a>
+    <hr>
+    <h3>Last Priority </h3><a style="color: black"  ng-repeat="item  in p3">{{item+"  "}}</a>
+
+    <div class="form-horizontal">
+        <button class="btn btn-success" ng-click="sort()">Sort Data</button><br>
+
+        <hr>
+        <h3>Non Matched Values </h3><a style="color: black"  ng-repeat="item  in nonMatched">{{item+"  "}}</a>
+        <hr>
+            <h3>Final Sorted Array</h3><a style="color: black"  ng-repeat="item  in final">{{item+"  "}}</a>
+    </div>
+    </p>
+</div>
+

@@ -1,0 +1,261 @@
+<style type="text/css">
+	#registerUser{
+		margin-top: 70px;
+	}
+
+	input{
+		border-radius: 3px;
+	}
+
+	/*td{
+		height: 45px;
+		width: 220px;
+		text-align: left;
+	}*/
+
+	.userContainer{
+		margin-left: 30px;
+		margin-top: 30px;
+		margin-bottom: 60px;
+		position: relative;
+
+	}
+	.control-label{
+		font-weight: bold;
+	}
+
+	/*th{
+		background-color: green;
+		color: white;
+	}*/
+</style>
+<!-- <script type="text/javascript">
+	$('#confirmSubmit').click(function(){
+		$('#fname').text($('#firstName').val());
+		$('#lname').text($('#lastName').val());
+	});
+
+
+</script> -->
+<div id="registerUser" class= "container" ng-controller="registerController">
+<div class="jumbotron text-center">
+<h3>User Register Form</h3>
+<br><br>
+<div class="form-horizontal">
+<form id="formField" >
+	<div class="form-group">
+		<div class="control-label col-sm-2" >First Name</div>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" 
+			id="firstName" data-ng-model = "newUser.firstName">
+		</div>
+		<div class="control-label col-sm-2" >Last Name</div>
+		<div class="col-sm-4">
+			<input type="text" class="form-control"
+			id="lastName" data-ng-model = "newUser.lastName">
+		</div>
+		
+	</div>
+	<div class="form-group">
+		<div class="control-label col-sm-2" >Email</div>
+		<div class="col-sm-4">
+			<input type="Email" class="form-control" data-ng-model = "newUser.email">
+		</div>
+		<div class="control-label col-sm-2" >Date of Birth</div>
+		<div class="col-sm-4">
+			<input type="Date" class="form-control" data-ng-model = "newUser.dob">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="control-label col-sm-2" >Gender</div>
+		<div class="col-sm-4" align="left">
+			<select ng-model="newUser.genderSelected" ng-options = "select for select in gender">
+		</select>
+		</div>
+		<div class="col">&nbsp;</div>
+		
+	</div>
+	<div class="form-group">
+		<div class="control-label col-sm-2">Permanent Address</div>
+		<div class="col-sm-8">&nbsp;</div>
+	</div>
+	<div class="form-group">
+		
+		<div class="control-label col-sm-2" >Zone</div>
+		<div class="col-sm-4" align="left">
+			<select ng-model="newUser.zoneSelected" ng-options="option as option.display for option in zones|orderBy : 'display'"><option ng-selected="myval" value="">Select a Zone</option>
+		</select>
+		</div>
+		<div ng-if = "newUser.zoneSelected">
+		<div class="control-label col-sm-2" >District</div>
+		<div class="col-sm-4" align="left">
+			<select ng-model="newUser.districtSelected" 
+		ng-options="option.name for option in zones[zones.indexOf(newUser.zoneSelected)].data | orderBy : 'name'">
+			<option value="" ng-selected="mySelect">Select a District</option>
+		</select>
+		</div>
+		</div>
+		
+	</div>
+	<!--<div ng-if="newUser.districtSelected">-->
+		<!--hello-->
+	<!--</div>-->
+	<div class="form-group">
+		<div class="control-label col-sm-2">Temporary Address</div>
+		<div class="col-sm-8">&nbsp;</div>
+	</div>
+	<div class="form-group">
+		
+		<div class="control-label col-sm-2" >Zone</div>
+		<div class="col-sm-4" align="left">
+			<select ng-model="newUser.tempZoneSelected" ng-options="tempOption as tempOption.display for tempOption in zones|orderBy : 'display'"><option ng-selected="myval" value="">Select a Zone</option>
+		</select>
+		</div>
+		<div ng-if="newUser.tempZoneSelected">
+		<div class="control-label col-sm-2" >District</div>
+		<div class="col-sm-4" align="left">
+			<select ng-model="newUser.tempDistrictSelected"
+		ng-options="tempOption.name for tempOption in
+		zones[zones.indexOf(newUser.tempZoneSelected)].data | orderBy : 'name'">
+			<option value="" ng-selected="mySelect">Select a District</option>
+		</select>
+		
+		</div>
+		</div>
+		
+	</div>
+	<br>
+	<div class="form-group" align="left">
+		<!--<button id="confirmSubmit" class="btn btn-primary" type="button" -->
+          <!--ng-click="#myModal">Add User</button>-->
+	</div>
+</form>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog" aria-hidden="true>
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">User Details</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+          	<tr>
+          		<th>First Name</th>
+          		<td ><input id="fname"></td>
+          	</tr>
+          	<tr>
+          		<th>Last Name</th>
+          		<td id="lname"></td>
+          	</tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" ng-click="insertUser()" class="btn btn-success success">Submit</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<div >
+		<h3>User List</h3>
+		<table class="table table-defalut table-bordered">
+		<tr style="background-color : green; color: white">
+			<th>Name</th>
+			<th>Email</th>
+			<th>Permanent Address</th>
+			<th>Temporary Address</th>
+			<th>Date of Birth</th>
+			<th><input type="checkbox" ng-model="myVal">&nbsp;&nbsp;Delete User</th>
+		</tr>
+		<tr ng-repeat="user in users">
+		<td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+		<td>{{user.email}}</td>
+
+		<td>{{user.districtSelected.name}},&nbsp;{{user.zoneSelected.display}}</td>
+		<td>{{user.tempDistrictSelected.name}},&nbsp;{{user.tempZoneSelected.display}}</td>
+		<td>{{user.dob | date}}</td>
+		<td><button style="text-align:left;" data-ng-click="deleteUser(user.id)" class="btn btn-warning" ng-disabled="!myVal">Delete</button></td>
+			
+		</tr>
+			
+		</table>
+</div> 
+
+
+<!-- <form class="">
+<div class="userContainer">
+	<table style="border-collapse: collapse">
+	<tr>
+		<td><b>First Name</b></td>
+		<td><input type="text" size="30" data-ng-model="newUser.firstName"></td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<b>Last Name  </b></td>
+		<td><input type="text" data-ng-model="newUser.lastName"></td>
+	</tr>
+	<tr>
+		<td><b>Email</b></td>
+		<td><input type="Email" size="30" data-ng-model="newUser.email"></td>
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<b>DOB</b></td>
+		<td><input type="Date" data-ng-model="newUser.dob"></td>
+	</tr>
+	<tr>
+		<td><b>Gender</b></td>
+		<td><select ng-model="genderSelected" ng-options = "select for select in gender">
+			
+		</select></td>
+		
+	</tr>
+	<tr>
+		<td><b>Permanent Address:</b> <br><br>Zone</td><td><select ng-model="zoneSelected" ng-options="option as option.display for option in zones|orderBy : 'display'"><option ng-selected="myval" value="">Select a Zone</option>
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td>District</td>
+		<td><select ng-model="districtSelected" 
+		ng-options="option.name for option in zones[zones.indexOf(zoneSelected)].data | orderBy : 'name'">
+			<option value="" ng-selected="mySelect">Select a District</option>
+		</select>	
+		</td>
+	</tr>
+		
+	</tr>
+	<tr>
+		<td>
+			<button id="submitUser" class="btn btn-primary" type="button" 
+			data-ng-disabled="!newUser.firstName || !newUser.lastName 
+			|| !newUser.email || !newUser.dob || !newUser.taskDetails 
+			|| !newUser.assignedBy"
+             data-ng-click="insertUser()" >Add User</button>
+
+		</td>
+	</tr>
+	</table> -->
+	
+	
+	<!-- <div>
+		<h3>User List</h3>
+		<table class="table table-defalut table-bordered">
+		<tr>
+			<th>Assigned To</th>
+			<th>Project Name</th>
+			<th>Task Details</th>
+			<th>Assigned By</th>
+			<th><input type="checkbox" ng-model="myVal">&nbsp;&nbsp;Delete User</th>
+		</tr>
+		<tr ng-repeat="user in users">
+		<td>{{user.assignedTo}}</td>
+		<td>{{user.projectName}}</td>
+
+		<td>{{user.taskDetails}}</td>
+		<td>{{user.assignedBy}}</td>
+		<td><button style="text-align:left;" data-ng-click="deleteUser(user.id)" class="btn btn-warning" ng-disabled="!myVal">Delete</button></td>
+			
+		</tr>
+			
+		</table>-->
+

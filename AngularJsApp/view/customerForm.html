@@ -1,0 +1,227 @@
+<div class="container" style="margin-top: 50px" ng-controller="testController">
+    <form class=" form-horizontal" role="form">
+
+        <table class="table">
+            <tr>
+                <td class="col-sm-2">
+                    <label for="firstName" class="control-label">Full Name</label>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" id="firstName" placeholder="First Name" ng-model="user.firstName" class="form-control" autofocus>
+                        <span class="help-block">eg.: Ram</span>
+                        <span>{{user.firstName}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" id="middleName" placeholder="Middle Name"  ng-model="user.middleName" class="form-control" autofocus>
+                        <span class="help-block">eg.: Bahadur </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="">
+                        <input type="text" id="lastName" placeholder="Lirst Name"  ng-model="user.lasttName" class="form-control" autofocus>
+                        <span class="help-block">eg.: Chhetri </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Zone</label></td>
+                <td><select ng-model="user.zone" class="form-control"   ng-options="tempOption as tempOption.display for tempOption in zones|orderBy : 'display'" ng-change="getDistrict()">
+                    <option value="">select zone</option>
+                </select>
+                    <span>{{user.user.zone}}</span>
+                </td>
+            </tr>
+            <tr ng-show="showMe">
+                <td><label>District</label></td>
+                <td> <select ng-model="user.district" class="form-control"  ng-options="tempOption.name for tempOption in zones[zones.indexOf(user.zone)].data | orderBy : 'name'"  >
+                    <option value="" ng-selected="">select district</option>
+                    <span>{{user.district}}</span>
+                </select>
+                    <span>{{district}}</span>
+                </td>
+            </tr>
+            <!--<tr ng-show="user.zone">-->
+                <!--<td>-->
+                    <!--<label>District</label>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<select ng-model="user.district"  class="form-control" ng-options="d as d.Name for d in address.zone[indexOf(user.zone)].District">-->
+                        <!--<option value="" ng-selected="">select district</option>-->
+                    <!--</select>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <tr>
+                <td>
+                    <label for="email">Email</label>
+                </td>
+                <td>
+                    <input type="email" id="email" ng-model="user.email" placeholder="eg: abc@gmail.com" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password">Password</label>
+                </td>
+                <td>
+                    <input type="password" id="password" ng-model="user.password" placeholder="eg:abc@123" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="birthDate">Date of Birth</label>
+                </td>
+                <td>
+                    <input type="date" id="birthDate" ng-model="user.dob" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label col-sm-3">Gender</label>
+                </td>
+                <td>
+                    <label class="radio-inline">
+                        <input type="radio" id="femaleRadio"  ng-model="user.gender" value="Female">Female
+                    </label>
+                    <br>
+                    <label class="radio-inline">
+                        <input type="radio" id="maleRadio" ng-model="user.gender" value="Male">Male
+                    </label>
+                    <br>
+                    <label class="radio-inline">
+                        <input type="radio" id="uncknownRadio" ng-model="user.gender" value="Unknown">Unknown
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="confirmSubmit" class="btn btn-primary" type="button"
+                            ng-click="#myModal">Add User</button>
+                    <!--<input type="submit" ng-click="userTable(user)" class="btn btn-success"></input>-->
+                </td>
+            </tr>
+        </table>
+    </form>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" aria-hidden="true>
+    <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">User Details</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <tr>
+                    <th>First Name</th>
+                    <td ><input id="fname"></td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td id="lname"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" ng-click="insertUser()" class="btn btn-success success">Submit</button>
+        </div>
+    </div>
+
+</div>
+
+    <div>
+        <h3>User List</h3>
+        <table class="table table-defalut table-bordered">
+            <tr style="background-color : red; color: white">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Zone</th>
+                <th>District</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th><input type="checkbox" ng-model="myVal">&nbsp;&nbsp;Delete User</th>
+            </tr>
+            <tr ng-repeat="user in users">
+                <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+
+                <td>{{user.zone.display}}</td>
+                <td>{{user.district.name}}</td>
+                <td>{{user.dob | date}}</td>
+                <td>{{user.gender}}</td>
+                <td><button style="text-align:left;" data-ng-click="deleteUser(user.id)" class="btn btn-warning" ng-disabled="!myVal">Delete</button></td>
+
+            </tr>
+
+        </table>
+    </div>
+
+    <div ng-show="showUser">
+        <table class="table table-bordered " style="margin-top: 5%">
+
+            <thead>
+            <!--<t> <td><p>Search <input type="text" ng-model="search.id" /></p></td></t>-->
+            <th>S.N</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Zone</th>
+            <th>Disrict</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            </thead>
+            <tbody>
+            <p>{{users}}</p>
+            <tr ng-repeat="customer in users">
+            <tr>
+                <td>{{$index+1}}</td>
+                <td>{{customer.firstName}}</td>
+
+                <td>{{customer.country}}</td>
+
+                <td>{{customer.zone}}</td>
+                <td>{{customer.zone.District.Name}}</td>
+                <td >{{customer.email}}</td>
+                <td >{{customer.password}}</td>
+                <td >{{customer.date}}</td>
+                <td >{{customer.gender}}</td>
+                <td><button type="button" class="btn btn-primary" ng-click="edit(customer.id)">Edit</button></td>
+                <td>  <button type="button" class="btn btn-danger" ng-click="delete(customer.id)">Delete</button></td>
+            </tr>
+            </tr>
+            <tr>
+                <td>{{firsName}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="container" ng-controller="customerController as vm">
+        <div class="row">
+
+            <div class="col-xs-12" ng-repeat="selection in vm.selectionData">
+                <div>
+                    <h3>{{selection.selectionType}}</h3>
+                </div>
+                <hr/>
+                <div style="margin-top: 10%" ng-repeat="(key, attribute) in selection.attributes">
+                    <span>{{key}} (Parent Selection: {{selection.attributes[attribute.parentAttr].selectedOption.name}})</span>
+                    <select class="form-control" ng-model="attribute.selectedOption" ng-options="attribute.name for attribute in (attribute.options | optionFilter : selection.attributes[attribute.parentAttr]) track by attribute.id">
+                    </select>
+                    <span>{{attribute.selectedOption}}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

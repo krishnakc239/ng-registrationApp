@@ -1,0 +1,96 @@
+
+<div ng-app="myApp" ng-controller="productController" style="margin-top: 5%">
+
+    <div>{{$data}}</div>
+    <form name="productForm" class="ng-pristine ng-invalid ng-invalid-required" novalidate ng-if="addproduct">
+
+        <table class="table table-bordered" style="margin-top: 5%">
+            <tr><td colspan="100%"><h3>Product Information</h3></td></tr>
+            <tr>
+                <td ng-click="sort(id)">ID
+                <span class="glyphicon glyphicon-sort" ng-show="sortKey=='id'" ng-class="{'glyphicon-icon-chevron-up':reverse,'glyphicon-icon-chevron-up':!reverse}"></span> </td>
+                <td><input type="text"
+                           name="id"
+                           ng-model="product.id"
+                           placeholder="product id"
+                           ng-pattern="/^[0-9]/"
+                           required />
+                    <p ng-show=" productForm.id.$error.pattern && productForm.id.$touched">Invalid id</p>
+                    <p ng-show="productForm.id.$error.required && productForm.id.$touched">Product id is required.</p>
+                    {{id}}
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input
+                        type="text"
+                        name="name"
+                        ng-model="product.name"
+                        ng-pattern="/^[a-zA-Z]/"
+                        placeholder="Product name"
+                        required>
+
+                    <p ng-show="productForm.name.$error.pattern">pattern error.</p>
+                    <p ng-show="productForm.name.$touched && productForm.name.$error.required">Product name is required.</p>
+                    <!--<p ng-show=" productForm.name.$touched && !productForm.name.$error.required && !productForm.name.$error.pattern ">Product name is required.</p>-->
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input type="text"
+                           name="price"
+                           ng-model="product.price"
+                           ng-pattern="/^[0-9]+$/"
+                           placeholder="product price"
+                           required>
+                    <p ng-show="productForm.price.$error.pattern">pattern error.</p>
+                    <p ng-show="productForm.price.$touched && productForm.price.$error.required">Product price is required.</p>
+                    {{price}}
+                </td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td><input type="text"
+                           name="quantity"
+                           ng-model="product.quantity"
+                           ng-pattern="/^[0-9]/"
+                           placeholder="product quantity"
+                           required>
+                    <p ng-show="productForm.quantity.$error.pattern">pattern error.</p>
+                    <p ng-show="productForm.quantity.$touched && productForm.quantity.$error.required">Product quantity is required.</p>
+                </td>
+
+            </tr>
+            <tr>
+                <td><button class="btn btn-success" ng-disabled="!productForm.$valid"  ng-click="add(product)" type="submit">Add</button>
+                    <button class="btn btn-success" ng-disabled="!productForm.$valid"  ng-click="save(product)" type="submit">Save</button>
+
+            </tr>
+        </table>
+    </form>
+
+    <table class="table table-bordered " style="margin-top: 5%" ng-table="productTable">
+        <p>Search <input type="text" ng-model="search.id" /></p>
+        <tr ng-repeat="product in $data |filter:search" >
+            <td data-title="'ID'">{{product.id}}</td>
+
+            <td data-title="'Name'" >{{product.name}}</td>
+
+            <td data-title="'Price'">{{product.price}}</td>
+
+            <td data-title="'Quantity'" >{{product.quantity}}</td>
+            <td data-title="'Edit'"><button type="button" class="btn btn-primary" ng-click="edit(product.id)">Edit</button></td>
+            <td data-title="'Delete'">  <button type="button" class="btn btn-danger" ng-click="delete(product.id)">Delete</button></td>
+
+
+
+
+        </tr>
+    </table>
+    <div><button class="btn btn-primary" ng-click="addProduct()" ng-if="!addproduct">Add product</button> </div>
+
+</div>
+

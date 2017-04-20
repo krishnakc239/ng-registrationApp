@@ -1,0 +1,342 @@
+<div header-directive></div>
+<div id="registerUser" class="container" ng-controller="registerController">
+    <div>
+
+    <!--</div>-->
+        <div class="form-horizontal" role="form"  ng-show="registerForm">
+            <form id="formField" name="userForm" class="">
+                <div class="form-group">
+                    <h3 class="col-sm-12" align="center" style="font-family: cursive;color: darkblue">Customer Registration Form</h3>
+                </div>
+                <div class="form-group" ng-show="id">
+                    <div class="control-label col-sm-4">ID</div>
+                    <div class="control-label col-sm-2">
+                        {{newUser.id}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="control-label col-sm-4">Name</div>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control"
+                               id="firstName" data-ng-model="newUser.firstName" placeholder="First Name"
+                               name="firstName"
+                               ng-pattern="/^[a-zA-Z]/"
+                               required >
+
+                        <p ng-show="userForm.firstName.$error.pattern" class="error">pattern error.</p>
+                        <p ng-show="userForm.firstName.$touched && userForm.firstName.$error.required"class="error" >First name required.</p>
+
+                    </div>
+                    <!--<div class="control-label col-sm-4">Middle Name</div>-->
+                    <!--<div class="col-sm-4">-->
+                        <!--<input type="text" class="form-control"-->
+                               <!--id="middleName" data-ng-model="newUser.middleName" placeholder="Middle Name">-->
+                    <!--</div>-->
+                    <!--<div class="control-label col-sm-4">Last Name</div>-->
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control"
+                               id="lastName" data-ng-model="newUser.lastName" placeholder="Last Name"
+                               name="lastName"
+                               ng-pattern="/^[a-zA-Z]/"
+                               required >
+
+                        <p ng-show="userForm.lastName.$error.pattern" class="error">pattern error.</p>
+                        <p ng-show="userForm.lastName.$touched && userForm.lastName.$error.required"class="error" >Last name required.</p>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-sm-4" data-ng-model="newUser.email">Email</div>
+                    <div class="col-sm-4">
+                        <input type="Email" class="form-control" data-ng-model="newUser.email" placeholder="eg:abc@gmail.com"
+                               name="email"
+                               pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                               required >
+
+                        <!--<p ng-show="userForm.email.$error.pattern" class="error">invalid email.</p>-->
+                        <p ng-show="userForm.email.$touched && userForm.email.$error.required"class="error" >email required.</p>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-sm-4">Date of Birth</div>
+                    <div class="col-sm-4">
+                        <input type="Date" class="form-control" data-ng-model="newUser.dob"
+                               name="dob"
+                               required >
+                        <p ng-show="userForm.dob.$touched && userForm.dob.$error.required"class="error" >Birth date required.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-sm-4">Permanent Address</div>
+                    <!--<div class="col-sm-8">&nbsp;</div>-->
+                </div>
+                <div class="form-group">
+
+                    <div class="control-label col-sm-4">Zone</div>
+                    <div class="col-sm-4" align="left">
+                        <select ng-model="newUser.zoneSelected"  class="form-control" name="pzone"
+                                ng-options="option as option.display for option in zones|orderBy : 'display'" required>
+                            <option ng-selected="myval" value="">Select a Zone</option>
+                        </select>
+                        <p ng-show="userForm.pzone.$touched && userForm.pzone.$error.required"class="error" >Permanent Zone required.</p>
+
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <div ng-if="newUser.zoneSelected">
+                        <div class="control-label col-sm-4">District</div>
+                        <div class="col-sm-4" align="left">
+                            <select ng-model="newUser.districtSelected"  class="form-control" name="pdistrict"
+                                    ng-options="option.name for option in zones[zones.indexOf(newUser.zoneSelected)].data | orderBy : 'name'" required>
+                                <option value="" ng-selected="mySelect">Select a District</option>
+                            </select>
+                            <p ng-show="userForm.pdistrict.$touched && userForm.pdistrict.$error.required"class="error" >Permanent District required.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!--<div ng-if="newUser.districtSelected">-->
+                <!--hello-->
+                <!--</div>-->
+                <div class="form-group">
+                    <div class="control-label col-sm-4">Temporary Address</div>
+                    <!--<div class="col-sm-8">&nbsp;</div>-->
+                </div>
+                <div class="form-group">
+
+                    <div class="control-label col-sm-4">Zone</div>
+                    <div class="col-sm-4" align="left">
+                        <select ng-model="newUser.tempZoneSelected" class="form-control" name="zone"
+                                ng-options="tempOption as tempOption.display for tempOption in zones|orderBy : 'display'" required>
+                            <option ng-selected="myval" value="">Select a Zone</option>
+                        </select>
+                        <!--<p ng-show="userForm.zone.$touched && userForm.zone.$error.required"class="error" >Zone required.</p>-->
+
+                    </div>
+                </div>
+                    <div class="form-group">
+                    <div ng-if="newUser.tempZoneSelected">
+                        <div class="control-label col-sm-4">District</div>
+                        <div class="col-sm-4" align="left">
+                            <select ng-model="newUser.tempDistrictSelected"  class="form-control"
+                                    ng-options="tempOption.name for tempOption in zones[zones.indexOf(newUser.tempZoneSelected)].data | orderBy : 'name'" required>
+                                <option value="" ng-selected="mySelect">Select a District</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Gender</label>
+                    <label class="radio-inline">
+                        <input type="radio" id="femaleRadio"  ng-model="user.gender" value="Female">Female
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" id="maleRadio" ng-model="user.gender" value="Male">Male
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" id="uncknownRadio" ng-model="user.gender" value="Unknown">Unknown
+                    </label>
+                </div>
+                <br>
+                <div class="form-group text-center">
+                    <button id="confirmSubmit" class="btn btn-primary" type="button" data-toggle="modal" data-dismiss="modal"
+                    data-target="#myModal"
+                            ng-show="editAddButton">Add User</button>
+                    <button type="button" class="btn btn-primary" ng-show="editClicked" ng-click="save()">Save</button>
+                </div>
+                <br>
+            </form>
+        </div>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Confirmation</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: white">
+                        <table class="table" style="border: hidden">
+                        <tr>
+                        <th>Full Name</th>
+                            <td>{{newUser.firstName}}&nbsp;
+                               {{newUser.lastName}}
+                        </td>
+                        <!--</tr>-->
+                            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<th>Middle Name</th>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td><p >{{newUser.middleName}}</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                        <!--<tr>-->
+                        <!--<th>Last Name</th>-->
+                        <!--<td><p>{{newUser.lastName}}</p></td>-->
+                        <!--</tr>-->
+                            <tr>
+                                <th>Email</th>
+                                <td>{{newUser.email}}</td>
+                            </tr>
+                            <tr>
+                                <th>DOB</th>
+                                <td>{{newUser.dob}}</td>
+                            </tr>
+                            <tr>
+                                <td>Permanent Address </td>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <td>{{newUser.zoneSelected.display}}</td>
+                            </tr>
+                            <tr>
+                                <th>District</th>
+                                <td>{{newUser.districtSelected.name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Temporary Address </td>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <td>{{newUser.tempZoneSelected.display}}</td>
+                            </tr>
+                            <tr>
+                                <th>District</th>
+                                <td>{{newUser.tempDistrictSelected.name}}</td>
+                            </tr>
+                        </table>
+                        <!--<p>Do you want to save changes you made to document before closing?</p>-->
+                        <!--<p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="insertUser()" data-dismiss="modal" ng-show="addUserClicked">confirm</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div ng-show="userList">
+
+        <h3 style="font-family: cursive;color: #122b40">User List</h3>
+        <table class="table table-defalut table-bordered">
+            <tr style="background-color : darkblue; color: white">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Permanent Address</th>
+                <th>Temporary Address</th>
+                <th>Date of Birth</th>
+                <th><input type="checkbox" ng-model="myVal1">&nbsp;&nbsp;Edit User</th>
+                <th><input type="checkbox" ng-model="myVal2">&nbsp;&nbsp;Delete User</th>
+
+            </tr>
+            <tr ng-repeat="user in users">
+                <td>{{user.id}}</td>
+                <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+
+                <td>{{user.districtSelected.name}},&nbsp;{{user.zoneSelected.display}}</td>
+                <td>{{user.tempDistrictSelected.name}},&nbsp;{{user.tempZoneSelected.display}}</td>
+                <td>{{user.dob | date}}</td>
+                <td>
+                    <button style="text-align:left;"  class="btn btn-primary"  ng-click="edit(user)"
+                            ng-disabled="!myVal1">edit
+                    </button>
+                </td>
+                <td>
+                    <button style="text-align:left;" data-ng-click="deleteUser(user.id)" class="btn btn-warning"
+                            ng-disabled="!myVal2">Delete
+                    </button>
+                </td>
+
+
+            </tr>
+
+        </table>
+        <div class="form-group left">
+            <button  class="btn btn-primary" type="button" ng-click="addMoreUser()">Add User</button>
+
+        </div>
+
+    </div>
+<!--//MOdal for edit-->
+    <div id="myModal1" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body" style="background-color: white">
+                    <table class="table" style="border: hidden">
+                        <tr>
+                            <th>ID</th>
+                            <td>{{user.id}} </td>
+                        </tr>
+                        <tr>
+                            <th>Full Name</th>
+                            <td><input type="text" ng-model="user.firstName" /> &nbsp;
+                                <input type="text" ng-model="user.lastName"  />
+                            </td>
+                            <!--</tr>-->
+                            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<th>Middle Name</th>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td><p >{{newUser.middleName}}</td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                            <!--<tr>-->
+                            <!--<th>Last Name</th>-->
+                            <!--<td><p>{{newUser.lastName}}</p></td>-->
+                            <!--</tr>-->
+                        <tr>
+                            <th>Email</th>
+                            <td><input type="text" ng-model="user.email"/></td>
+                        </tr>
+                        <tr>
+                            <th>DOB</th>
+                            <td><input type="text" ng-model="user.dob" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permanent Address </td>
+                        </tr>
+                        <tr>
+                            <th>Zone</th>
+                            <td><input type="text" ng-model="user.zoneSelected.display" /></td>
+                        </tr>
+                        <tr>
+                            <th>District</th>
+                            <td><input type="text" ng-model="user.districtSelected.name" /></td>
+                        </tr>
+                        <tr>
+                            <td>Temporary Address </td>
+                        </tr>
+                        <tr>
+                            <th>Zone</th>
+                            <td><input type="text" ng-model="user.tempZoneSelected.display"/></td>
+                        </tr>
+                        <tr>
+                            <th>District</th>
+                            <td><input type="text" ng-model="user.tempDistrictSelected.name" /></td>
+                        </tr>
+                    </table>
+                    <!--<p>Do you want to save changes you made to document before closing?</p>-->
+                    <!--<p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>-->
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                    <!--<button type="button" class="btn btn-primary" ng-click="insertUser()" data-dismiss="modal" ng-show="addUserClicked">confirm</button>-->
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
