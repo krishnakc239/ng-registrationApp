@@ -52,7 +52,7 @@
                     <div class="col-sm-4">
                         <input type="Email" class="form-control" data-ng-model="newUser.email" placeholder="eg:abc@gmail.com"
                                name="email"
-                               pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                               pattern= "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/"
                                required >
 
                         <!--<p ng-show="userForm.email.$error.pattern" class="error">invalid email.</p>-->
